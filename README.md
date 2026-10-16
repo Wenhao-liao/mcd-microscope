@@ -88,13 +88,12 @@
 
 | 维度 | 数据来源 | 产出 |
 |---|---|---|
-| **套餐拆解** | `query-meal-detail` + `calculate-price` | 套餐 vs 单点的真实差价 |
-| **广告价对照** | `campaign-calendar` + `query-meals` | 海报价的达成条件与无券实价 |
-| **换购暗门** | `query-meal-detail` | 所有 `+ ¥0` 可换项 |
-| **券的真实可用性** | `query-store-coupons` | 该店**当前真的能用**的券 |
-| **积分寿命** | `query-my-account` + `mall-points-products` | 余额 / 临期 / 已浪费 / 价值折算 |
-| **营养性价比地图** | `query-meals` + `list-nutrition-foods` | 每元蛋白排行 / 蛋白密度排行 / 钠负荷 |
-| **热量账** | `list-nutrition-foods` | 整单 kcal / 蛋白 / 脂肪 / 钠 |
+| **A · 套餐拆解** | `query-meal-detail` + `calculate-price` | 套餐 vs 单点的真实差价 |
+| **B · 广告价 vs 到手价** | `campaign-calendar` + `query-meals` + `query-store-coupons` | 海报价的达成条件、无券实价、该店当前真能用的券 |
+| **C · 换购暗门** | `query-meal-detail` | 所有 `+ ¥0` 可换项 |
+| **D · 积分寿命** | `query-my-account` + `mall-points-products` | 余额 / 临期 / 已浪费 / 价值折算 |
+| **E · 热量账** | `list-nutrition-foods` | 整单 kcal / 蛋白 / 脂肪 / 钠 |
+| **F · 营养性价比地图**（核心） | `query-meals` + `list-nutrition-foods` | 每元蛋白排行 / 蛋白密度排行 / 钠负荷 |
 
 最终输出两张可截图分享的卡片 —— 零依赖单文件 HTML，用 `scripts/render_cards.cjs` 可一键渲成 2x 视网膜 PNG：
 
@@ -188,6 +187,9 @@ python3 scripts/compute_protein_value.py --help           # 看全部参数
 .
 ├── SKILL.md                      # 核心：工作流、六大分析维度、铁律、异常降级、输出模板
 ├── README.md                     # 本文件
+├── CONTEST_DECLARATION.md        # 参赛声明（官方模板，内容不可改动）
+├── MCP_INTEGRATION.md            # MCP 集成说明：接入的 Server、Tool、调用流程、业务价值
+├── mcp-config.example.json       # 脱敏配置示例（仅环境变量占位符）
 ├── workbuddy.md                  # WorkBuddy 开发说明
 ├── LICENSE
 ├── references/
@@ -223,6 +225,9 @@ python3 scripts/compute_protein_value.py --help           # 看全部参数
 
 **5. 营养数据必须做口径对齐。**
 官方营养表按「**份**」给（「麦乐鸡5块」「麦乐鸡4块」是两行），菜单按「**品**」给（只有一个「麦乐鸡」）。两者不是一一对应。对不上的**一律排除** —— 不允许拿同类顶替，也不允许按比例硬折算。健身类内容一旦数字有误，整个工具的可信度就归零。
+
+**6. 只呈现数据，不给营养或医疗建议。**
+本项目输出的是**官方营养表与菜单标价的事实性汇总**，用于横向比较，**不构成营养学、医学或任何专业建议**。增减摄入、疾病相关饮食请咨询专业人士。餐品规格、价格与供应状态以麦当劳官方渠道的实时结果为准。
 
 ---
 
