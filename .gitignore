@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 本地工作笔记 / 会话记忆（含内部策略推演，不入公开仓库）
+.workbuddy/
+
+# 脚本临时输出
+out.json
+*.tmp.json
+
+# 编辑器
+.idea/
+.vscode/

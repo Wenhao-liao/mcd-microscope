@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>麦当劳营养性价比地图</title>
+<style>
+  :root{
+    --bg:#0e0e10; --card:#17171a; --card2:#1e1e22; --line:#2a2a30;
+    --fg:#f2f2f3; --dim:#8b8b93; --faint:#5e5e66;
+    --brand:#ffc72c; --warn:#e8474b; --good:#3ecf8e;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    display:flex; justify-content:center; padding:36px 16px 72px;
+    -webkit-font-smoothing:antialiased; line-height:1.55;
+  }
+  .wrap{width:100%;max-width:620px}
+
+  .kicker{
+    display:inline-block; font-size:11px; letter-spacing:.14em;
+    color:var(--brand); border:1px solid rgba(255,199,44,.32);
+    border-radius:999px; padding:4px 11px; margin-bottom:12px;
+  }
+  h1{font-size:21px;font-weight:600;letter-spacing:-.01em;line-height:1.35}
+  .meta{font-size:12.5px;color:var(--faint);margin-top:6px;font-family:var(--mono)}
+
+  .verdict{
+    background:linear-gradient(180deg,#221c0c,#17171a);
+    border:1px solid rgba(255,199,44,.26);
+    border-radius:14px; padding:18px 20px; margin:18px 0 12px;
+  }
+  .verdict .label{font-size:11.5px;color:var(--brand);letter-spacing:.06em;margin-bottom:7px}
+  .verdict .text{font-size:17px;font-weight:600;line-height:1.5}
+  .verdict .text em{font-style:normal;color:var(--brand)}
+
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+  .sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;gap:10px}
+  .sec-t{font-size:14px;font-weight:600}
+  .sec-n{font-size:11.5px;color:var(--faint);font-family:var(--mono);flex:none}
+
+  .rank{display:flex;flex-direction:column;gap:9px}
+  .item{display:grid;grid-template-columns:20px 1fr auto;gap:10px;align-items:center}
+  .item .no{font-family:var(--mono);font-size:12px;color:var(--faint);text-align:right}
+  .item .body{min-width:0}
+  .item .row1{display:flex;align-items:baseline;gap:8px;margin-bottom:5px}
+  .item .nm{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item .pz{font-size:11.5px;color:var(--faint);font-family:var(--mono);flex:none;margin-left:auto}
+  .item .track{height:8px;border-radius:4px;background:var(--card2);overflow:hidden}
+  .item .track i{display:block;height:100%;border-radius:4px}
+  .item .val{font-family:var(--mono);font-size:13px;width:52px;text-align:right}
+  .item.top .nm{color:var(--brand)}
+  .item.top .val{color:var(--brand);font-size:14px}
+  .g1{background:#5F5E5A}
+  .g2{background:#EF9F27}
+  .g3{background:#D85A30}
+
+  .alert{
+    display:flex;gap:11px;align-items:flex-start;
+    background:rgba(232,71,75,.07);border:1px solid rgba(232,71,75,.28);
+    border-radius:11px;padding:13px 15px;margin-top:14px;
+  }
+  .alert .ic{width:3px;border-radius:2px;background:var(--warn);align-self:stretch;flex:none}
+  .alert .tx{font-size:12.5px;line-height:1.65;color:#e8c7c7}
+  .alert .tx b{color:#fff;font-weight:600}
+
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .t3{background:var(--card2);border-radius:9px;padding:11px 12px}
+  .t3 .k{font-size:11px;color:var(--faint);margin-bottom:5px}
+  .t3 .v{font-size:15px;font-family:var(--mono);font-weight:600}
+  .t3 .d{font-size:11px;color:var(--dim);margin-top:3px;line-height:1.45}
+
+  .note{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--faint);line-height:1.7}
+  .note code{font-family:var(--mono);color:#7d7d87}
+
+  @media(max-width:430px){
+    h1{font-size:18px}
+    .verdict .text{font-size:15px}
+    .three{grid-template-columns:1fr}
+    .item{grid-template-columns:16px 1fr auto;gap:8px}
+    .item .val{width:46px;font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="kicker">营养性价比地图</span>
+  <h1>麦当劳里买蛋白质最划算的，<br>不是汉堡</h1>
+  <div class="meta">麦当劳 深圳北站站内一店 · storeCode 1420227 · 2026-10-16</div>
+
+  <div class="verdict">
+    <div class="label">一句话结论</div>
+    <div class="text">冠军是 <em>¥15 的那么大鸡排</em>，每 1 元买到 1.6 克蛋白 —— 比第二名高出 57%。</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hd">
+      <span class="sec-t">蛋白质性价比排行</span>
+      <span class="sec-n">g 蛋白 / 元</span>
+    </div>
+    <div class="rank">
+
+      <div class="item top">
+        <span class="no">1</span>
+        <span class="body">
+          <span class="row1"><span class="nm">那么大鸡排（椒盐风味）</span><span class="pz">¥15.0 · 24g</span></span>
+          <span class="track"><i class="g2" style="width:100%"></i></span>
+        </span>
+        <span class="val">1.600</span>
+      </div>
+
+      <div class="item">
+        <span class="no">2</span>
+        <span class="body">
+          <span class="row1"><span class="nm">双层吉士汉堡</span><span class="pz">¥26.5 · 27g</span></span>
+          <span class="track"><i class="g1" style="width:63.7%"></i></span>
+        </span>
+        <span class="val">1.019</span>
+      </div>
+
+      <div class="item">
+        <span class="no">3</span>
+        <span class="body">
+          <span class="row1"><span class="nm">双层深海鳕鱼堡</span><span class="pz">¥28.0 · 28g</span></span>
+          <span class="track"><i class="g1" style="width:62.5%"></i></span>
+        </span>
+        <span class="val">1.000</span>
+      </div>
+
+      <div class="item">
+        <span class="no">4</span>
+        <span class="body">
+          <span class="row1"><span class="nm">不素之霸双层牛堡</span><span class="pz">¥29.5 · 28g</span></span>
+          <span class="track"><i class="g1" style="width:59.3%"></i></span>
+        </span>
+        <span class="val">0.949</span>
+      </div>
+
+      <div class="item">
+        <span class="no">5</span>
+        <span class="body">
+          <span class="row1"><span class="nm">巨无霸</span><span class="pz">¥29.0 · 27g</span></span>
+          <span class="track"><i class="g1" style="width:58.2%"></i></span>
+        </span>
+        <span class="val">0.931</span>
+      </div>
+
+      <div class="item">
+        <span class="no">6</span>
+        <span class="body">
+          <span class="row1"><span class="nm">麦辣鸡腿汉堡</span><span class="pz">¥26.0 · 24g</span></span>
+          <span class="track"><i class="g1" style="width:57.7%"></i></span>
+        </span>
+        <span class="val">0.923</span>
+      </div>
+
+      <div class="item">
+        <span class="no">7</span>
+        <span class="body">
+          <span class="row1"><span class="nm">麦香鸡</span><span class="pz">¥19.5 · 15g</span></span>
+          <span class="track"><i class="g3" style="width:48.1%"></i></span>
+        </span>
+        <span class="val">0.769</span>
+      </div>
+
+      <div class="item">
+        <span class="no">8</span>
+        <span class="body">
+          <span class="row1"><span class="nm">麦香鱼</span><span class="pz">¥25.0 · 16g</span></span>
+          <span class="track"><i class="g3" style="width:40.0%"></i></span>
+        </span>
+        <span class="val">0.640</span>
+      </div>
+
+    </div>
+
+    <div class="alert">
+      <span class="ic"></span>
+      <span class="tx">
+        <b>别只看性价比。</b>麦辣鸡腿汉堡性价比 0.923 排第 6，但钠高达 <b>1208mg</b>，
+        接近每日推荐上限的一半。单指标排序会把人带偏 —— 性价比、热量密度、钠，三个一起看。
+      </span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hd">
+      <span class="sec-t">换个目标，答案就变了</span>
+      <span class="sec-n">按目标分流</span>
+    </div>
+    <div class="three">
+      <div class="t3">
+        <div class="k">增肌</div>
+        <div class="v">性价比优先</div>
+        <div class="d">先堆够蛋白，再看热量别爆</div>
+      </div>
+      <div class="t3">
+        <div class="k">减脂</div>
+        <div class="v">密度优先</div>
+        <div class="d">热量预算有限，每口都要换成蛋白</div>
+      </div>
+      <div class="t3">
+        <div class="k">控钠</div>
+        <div class="v">钠是硬约束</div>
+        <div class="d">先筛掉 &gt;1000mg，再挑性价</div>
+      </div>
+    </div>
+    <div class="note">
+      同样是「在麦当劳吃够蛋白」，增肌的人该点 ¥15 的鸡排，减脂的人该看每 100 kcal 的蛋白密度，
+      控钠的人可能得放弃麦辣鸡腿汉堡。<b>没有唯一正确答案，只有约束条件。</b>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hd">
+      <span class="sec-t">数据口径</span>
+      <span class="sec-n">可复现</span>
+    </div>
+    <div class="note" style="margin-top:0;padding-top:0;border-top:none">
+      排行基于该门店菜单实际标价 + 麦当劳官方营养表，两者按名称归一化后匹配。<br>
+      共 94 个单品：<b>25 项</b>在官方营养表里找不到对应项（蘸酱系列、新款麦旋风等），
+      <b>16 项</b>规格 / 份数不明（如「薯条」对不上中 / 大 / 小 / 迷你哪一种）——
+      <b>全部排除，未做任何估算</b>，最终 53 项进入排行。<br>
+      官方营养表按「份」给出，菜单按「品」给出，两者口径并非一一对应 —— 对不上的项一律排除。<br>
+      价格来自 <code>query-meals</code>，营养来自 <code>list-nutrition-foods</code>，
+      由 <code>mcd-mcp</code>（麦当劳中国官方 MCP）实测。<b>换城市、换门店，结论会变。</b>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

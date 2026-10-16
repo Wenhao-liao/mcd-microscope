@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>麦门显微镜 · 成分表</title>
+<style>
+  :root{
+    --bg:#0e0e10; --card:#17171a; --card2:#1e1e22; --line:#2a2a30;
+    --fg:#f2f2f3; --dim:#8b8b93; --faint:#5e5e66;
+    --brand:#ffc72c; --warn:#e8474b; --good:#3ecf8e;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    display:flex; justify-content:center; padding:36px 16px 72px;
+    -webkit-font-smoothing:antialiased; line-height:1.55;
+  }
+  .wrap{width:100%;max-width:600px}
+
+  .head{margin-bottom:22px}
+  .kicker{
+    display:inline-block; font-size:11px; letter-spacing:.14em;
+    color:var(--brand); border:1px solid rgba(255,199,44,.32);
+    border-radius:999px; padding:4px 11px; margin-bottom:12px;
+  }
+  .store{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .meta{font-size:12.5px;color:var(--faint);margin-top:5px;font-family:var(--mono)}
+
+  .verdict{
+    background:linear-gradient(180deg,#221c0c,#17171a);
+    border:1px solid rgba(255,199,44,.26);
+    border-radius:14px; padding:18px 20px; margin-bottom:14px;
+  }
+  .verdict .label{font-size:11.5px;color:var(--brand);letter-spacing:.06em;margin-bottom:7px}
+  .verdict .text{font-size:17px;font-weight:600;line-height:1.5}
+  .verdict .text em{font-style:normal;color:var(--brand)}
+
+  .sec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+  .sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+  .sec-t{font-size:14px;font-weight:600}
+  .sec-n{font-size:11.5px;color:var(--faint);font-family:var(--mono)}
+
+  .cmp{display:flex;flex-direction:column;gap:11px}
+  .row{display:flex;align-items:center;gap:12px}
+  .row .nm{font-size:12.5px;color:var(--dim);width:88px;flex:none}
+  .bar{height:26px;border-radius:6px;flex:1;position:relative;overflow:hidden;background:var(--card2)}
+  .bar i{position:absolute;inset:0;border-radius:6px;display:block}
+  .b1 i{background:linear-gradient(90deg,#3a3a42,#4a4a54);width:99.1%}
+  .b2 i{background:linear-gradient(90deg,#5c4a12,#8a6f1c);width:100%}
+  .row .pv{font-size:13.5px;font-family:var(--mono);width:66px;text-align:right;flex:none}
+  .delta{
+    margin-top:13px;padding-top:13px;border-top:1px dashed var(--line);
+    display:flex;align-items:baseline;justify-content:space-between;
+  }
+  .delta .d-l{font-size:12.5px;color:var(--dim)}
+  .delta .d-v{font-family:var(--mono);font-size:19px;font-weight:600;color:var(--warn)}
+
+  .swap{display:flex;flex-direction:column;gap:9px}
+  .sw{
+    display:flex;align-items:center;gap:10px;
+    background:var(--card2);border-radius:9px;padding:11px 13px;font-size:13px;
+  }
+  .sw .from{color:var(--faint);text-decoration:line-through}
+  .sw .arw{color:var(--faint);font-size:11px}
+  .sw .to{color:var(--fg);font-weight:500}
+  .sw .free{
+    margin-left:auto;font-family:var(--mono);font-size:11.5px;
+    color:var(--good);background:rgba(62,207,142,.1);
+    border-radius:5px;padding:2px 7px;flex:none;
+  }
+
+  .adv{display:flex;flex-direction:column;gap:10px}
+  .adv-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+  .adv-row .k{color:var(--dim)}
+  .adv-row .v{font-family:var(--mono)}
+  .adv-row .v.hi{color:var(--warn);font-size:15px;font-weight:600}
+  .note{
+    margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);
+    font-size:12px;color:var(--faint);line-height:1.6;
+  }
+
+  .foot{margin-top:18px;font-size:11.5px;color:var(--faint);line-height:1.7;text-align:center}
+  .foot code{font-family:var(--mono);color:#7d7d87}
+
+  @media(max-width:420px){
+    .row .nm{width:70px;font-size:11.5px}
+    .row .pv{width:58px;font-size:12.5px}
+    .sw{font-size:12px;flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <span class="kicker">麦门显微镜 · 成分表</span>
+    <div class="store">麦当劳 深圳北站站内一店</div>
+    <div class="meta">storeCode 1420227 · 到店自取 · 2026-10-16</div>
+  </div>
+
+  <div class="verdict">
+    <div class="label">一句话结论</div>
+    <div class="text">所谓「三件套」，只比单点便宜 <em>5 毛钱</em>。</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hd">
+      <span class="sec-t">套餐拆解</span>
+      <span class="sec-n">calculate-price 实测</span>
+    </div>
+    <div class="cmp">
+      <div class="row">
+        <span class="nm">三件套</span>
+        <span class="bar b1"><i></i></span>
+        <span class="pv">54.50</span>
+      </div>
+      <div class="row">
+        <span class="nm">单点合计</span>
+        <span class="bar b2"><i></i></span>
+        <span class="pv">55.00</span>
+      </div>
+    </div>
+    <div class="delta">
+      <span class="d-l">巨无霸 29.00 + 中薯条 14.50 + 可乐 11.50</span>
+      <span class="d-v">− 0.50</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hd">
+      <span class="sec-t">不加钱可换</span>
+      <span class="sec-n">diffPrice = + ¥0</span>
+    </div>
+    <div class="swap">
+      <div class="sw">
+        <span class="from">中薯条</span>
+        <span class="arw">换成</span>
+        <span class="to">小杯玉米杯</span>
+        <span class="free">+ ¥0</span>
+      </div>
+      <div class="sw">
+        <span class="from">可乐中杯</span>
+        <span class="arw">换成</span>
+        <span class="to">无糖可口可乐中杯</span>
+        <span class="free">+ ¥0</span>
+      </div>
+      <div class="sw">
+        <span class="from">可乐中杯</span>
+        <span class="arw">换成</span>
+        <span class="to">雪碧中杯</span>
+        <span class="free">+ ¥0</span>
+      </div>
+    </div>
+    <div class="note">菜单上不提示，点餐页要逐层展开才看得到。换成无糖可乐：价格不变，糖归零。</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hd">
+      <span class="sec-t">海报价对照</span>
+      <span class="sec-n">campaign-calendar</span>
+    </div>
+    <div class="adv">
+      <div class="adv-row">
+        <span class="k">活动海报价（需凭券）</span>
+        <span class="v">26.90 起</span>
+      </div>
+      <div class="adv-row">
+        <span class="k">该门店当前标价</span>
+        <span class="v hi">53.00</span>
+      </div>
+      <div class="adv-row">
+        <span class="k">当前店铺可用券</span>
+        <span class="v">0 张</span>
+      </div>
+    </div>
+    <div class="note">
+      差的不是一倍价钱，是一个前置条件。海报价需要凭券 / 麦金卡触发 —— 有券是多少，没券是多少，这是两件事。
+    </div>
+  </div>
+
+  <div class="foot">
+    数据来源：麦当劳中国官方 MCP <code>mcd-mcp</code><br>
+    金额均由 <code>calculate-price</code> 实测得出，未做任何估算
+  </div>
+
+</div>
+</body>
+</html>

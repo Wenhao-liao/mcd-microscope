@@ -1,0 +1,103 @@
+{
+  "_note": "麦门显微镜实测样本。所有金额均由 mcd-mcp 的 calculate-price / query-meals 接口原始返回，未经人工调整。",
+  "_collected_at": "2026-10-16T10:34+08:00",
+  "_store": {
+    "storeCode": "1420227",
+    "storeName": "麦当劳深圳北站站内一店餐厅(B18/B19检票口上方)",
+    "address": "深圳北站候车大厅B区二楼（B18/B19检票口上方）",
+    "businessHours": "06:00-22:00",
+    "distance": 62
+  },
+  "case_1_combo_vs_alacarte": {
+    "question": "巨无霸三件套到底比单点便宜多少？",
+    "combo": {
+      "productCode": "9900005466",
+      "name": "巨无霸三件套",
+      "priceFen": 5450,
+      "priceYuan": 54.5,
+      "composition": [
+        { "round": 1, "name": "新升级巨无霸", "defaultChoice": "巨无霸", "code": "1100", "diffPrice": "+ ¥0" },
+        { "round": 2, "name": "选择套餐内小食", "defaultChoice": "中薯条", "code": "4810", "diffPrice": "+ ¥0" },
+        { "round": 3, "name": "选择套餐内饮料", "defaultChoice": "可乐中杯", "code": "3050", "diffPrice": "+ ¥0" }
+      ]
+    },
+    "alacarte": {
+      "items": [
+        { "productCode": "1100", "name": "巨无霸", "subtotalFen": 2900 },
+        { "productCode": "4810", "name": "中薯条", "subtotalFen": 1450 },
+        { "productCode": "9900008751", "name": "可乐", "subtotalFen": 1150 }
+      ],
+      "priceFen": 5500,
+      "priceYuan": 55.0
+    },
+    "result": {
+      "savedFen": 50,
+      "savedYuan": 0.5,
+      "savedPercent": 0.91,
+      "conclusion": "套餐仅比单点便宜 0.50 元，折扣率不足 1%。"
+    }
+  },
+  "case_2_free_swap_options": {
+    "question": "套餐里有哪些【不加钱】就能换的选项？",
+    "source": "query-meal-detail round[].choices[] where diffPrice == '+ ¥0' and isDefault == 0",
+    "swaps": [
+      { "round": "选择套餐内小食", "from": "中薯条", "fromCode": "4810", "to": "小杯玉米杯", "toCode": "4437", "diffPrice": "+ ¥0" },
+      { "round": "选择套餐内饮料", "from": "可乐中杯", "fromCode": "3050", "to": "无糖可口可乐中杯", "toCode": "3071", "diffPrice": "+ ¥0" },
+      { "round": "选择套餐内饮料", "from": "可乐中杯", "fromCode": "3050", "to": "雪碧中杯", "toCode": "3060", "diffPrice": "+ ¥0" }
+    ],
+    "paidSwapExamples": [
+      { "round": "选择套餐内小食", "from": "中薯条", "to": "大薯条", "diffPrice": "+ ¥2.5" },
+      { "round": "选择套餐内小食", "from": "中薯条", "to": "大杯玉米杯", "diffPrice": "+ ¥3" },
+      { "round": "选择套餐内饮料", "from": "可乐中杯", "to": "大杯鲜萃咖啡", "diffPrice": "+ ¥1.5" }
+    ]
+  },
+  "case_3_advertised_vs_actual": {
+    "question": "活动海报上的价格，和门店实际标价差多少？",
+    "advertised": {
+      "source": "campaign-calendar 2026-10-16 今日活动",
+      "title": "麦当劳联动G-DRAGON 带来韩式风味系列新品",
+      "text": "龙焰鸡腿堡三件套 26.9 元起即刻开吃",
+      "priceYuan": 26.9,
+      "precondition": "需凭券触发"
+    },
+    "actual": {
+      "source": "query-meals storeCode=1420227",
+      "productCode": "9900016073",
+      "name": "龙焰鸡腿堡三件套",
+      "currentPriceYuan": 53,
+      "originalPriceYuan": 53
+    },
+    "storeCouponsAvailable": 0,
+    "conclusion": "海报价 26.9 元的前提是持有对应优惠券；该门店当前可用券为 0 张，无券实价为 53.00 元。",
+    "caveat": "海报价与实价的差额并非'虚假宣传'，而是前置条件差异。本品只陈述条件，不作价值判断。"
+  },
+  "case_4_points_lifespan": {
+    "question": "我的积分有多少，会不会过期？",
+    "source": "query-my-account",
+    "fieldNote": "注意官方字段名拼写为 Mouth（非 Month），照抄不要改",
+    "fields": [
+      "availablePoint", "accumulativePoint", "frozenPoint",
+      "expiredPoint", "usedPoint",
+      "currentMouthExpirePoint", "nextMouthExpirePoint", "lastMouthExpirePoint"
+    ],
+    "conclusion": "积分存在寿命。expiredPoint（已过期作废）与 currentMouthExpirePoint（本月将过期）是行动优先级最高的两个数字。",
+    "_redacted": "本文件不包含任何真实账户数值"
+  },
+  "case_5_nutrition": {
+    "question": "这一单多少热量？",
+    "source": "list-nutrition-foods（共 158 项）",
+    "fieldOrder": ["productName", "nutritionDescription", "energyKj", "energyKcal", "protein", "fat", "carbohydrate", "sodium", "calcium"],
+    "samples": [
+      { "productName": "巨无霸", "energyKcal": 513, "protein": 27, "fat": 26, "carbohydrate": 42, "sodium": 961, "calcium": 171 },
+      { "productName": "中薯条", "energyKcal": 289, "protein": 4, "fat": 12, "carbohydrate": 38, "sodium": 165, "calcium": 18 },
+      { "productName": "可乐中杯", "energyKcal": 147, "protein": 0, "fat": 0, "carbohydrate": 36, "sodium": 0, "calcium": 10 },
+      { "productName": "无糖可口可乐中杯", "energyKcal": 0, "protein": 0, "fat": 0, "carbohydrate": 1, "sodium": 35, "calcium": 0, "nutritionDescription": null }
+    ],
+    "note": "部分餐品官方自带 nutritionDescription 类比（如「能量约清水 1 杯」「能量约鲈鱼 1 条」），优先直接引用官方口径。",
+    "comboTotal": {
+      "巨无霸 + 中薯条 + 可乐中杯": 949,
+      "巨无霸 + 中薯条 + 无糖可口可乐中杯": 802,
+      "diffKcal": 147
+    }
+  }
+}
