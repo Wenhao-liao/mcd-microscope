@@ -1,5 +1,9 @@
 # 麦门显微镜 · McDonald's Microscope
 
+[![Stars](https://img.shields.io/github/stars/Wenhao-liao/mcd-microscope?style=social)](https://github.com/Wenhao-liao/mcd-microscope/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![MCP](https://img.shields.io/badge/MCP-mcd--mcp-ffc72c.svg)](https://github.com/M-China/mcd-mcp-server)
+
 > 把一单麦当劳拆开给你看。
 
 一个基于**麦当劳中国官方 MCP**（`mcd-mcp`）的消费与营养透明化 Skill。它不帮你点餐，也不替你省钱 —— 它做一件更基础的事：**把官方已经公开、但没人替你摊开的数据，算清楚给你看。**
@@ -7,6 +11,10 @@
 **核心模块：营养性价比地图。** 把度量单位从「多少钱」换成「**每 1 元买到多少克蛋白质**」，给出一张按性价比排序的菜单地图，再用热量密度和钠做交叉约束。
 
 **所有数字都来自官方接口实测。模型只负责解读，不负责算数。**
+
+<p align="center">
+  <a href="assets/nutrition-map.png"><img src="assets/nutrition-map.png" width="400" alt="营养性价比地图卡片"></a>
+</p>
 
 ---
 
@@ -88,7 +96,14 @@
 | **营养性价比地图** | `query-meals` + `list-nutrition-foods` | 每元蛋白排行 / 蛋白密度排行 / 钠负荷 |
 | **热量账** | `list-nutrition-foods` | 整单 kcal / 蛋白 / 脂肪 / 钠 |
 
-最终输出两张可截图分享的卡片：**「麦门成分表」** 与 **「营养性价比地图」**。
+最终输出两张可截图分享的卡片 —— 零依赖单文件 HTML，用 `scripts/render_cards.cjs` 可一键渲成 2x 视网膜 PNG：
+
+<p align="center">
+  <a href="assets/demo.png"><img src="assets/demo.png" width="380" alt="麦门成分表卡片"></a>
+  &nbsp;&nbsp;
+  <a href="assets/nutrition-map.png"><img src="assets/nutrition-map.png" width="380" alt="营养性价比地图卡片"></a>
+</p>
+<p align="center"><sub><b>「麦门成分表」</b> 与 <b>「营养性价比地图」</b> · 点图看原图</sub></p>
 
 ---
 
@@ -178,10 +193,13 @@ python3 scripts/compute_protein_value.py --help           # 看全部参数
 ├── references/
 │   └── tools.md                  # mcd-mcp 工具速查与字段陷阱
 ├── scripts/
-│   └── compute_protein_value.py  # 蛋白质性价比计算器，换门店可重跑
+│   ├── compute_protein_value.py  # 蛋白质性价比计算器，换门店可重跑
+│   └── render_cards.cjs          # 把 assets/*.html 渲成 2x 视网膜 PNG
 ├── assets/
 │   ├── demo.html                 # 「麦门成分表」卡片
-│   └── nutrition-map.html        # 「营养性价比地图」卡片
+│   ├── nutrition-map.html        # 「营养性价比地图」卡片
+│   ├── demo.png                  # ↑ 渲染结果（README 用）
+│   └── nutrition-map.png         # ↑ 渲染结果（README 用）
 └── examples/
     ├── measured-samples.json     # 价格 / 换购 / 广告价实测存档
     └── protein-value.json        # 营养性价比全量数据
@@ -226,9 +244,11 @@ python3 scripts/compute_protein_value.py --help           # 看全部参数
 
 本项目为 **WorkBuddy × 麦当劳「1024 程序员节创意开发大赛」** 参赛作品。
 
-如果这套"把账算清楚"的思路对你有用，**点个 Star 支持一下** —— 比赛按 Star 数排名，每一个都是实打实的票。
+仓库地址：**https://github.com/Wenhao-liao/mcd-microscope**
 
-也欢迎提 Issue 补充你在其他门店、其他城市跑出来的数据，让这份对照表更完整。
+如果这套"把账算清楚"的思路对你有用，**[点个 Star ⭐](https://github.com/Wenhao-liao/mcd-microscope/stargazers) 支持一下** —— 比赛按 Star 数排名，每一个都是实打实的票。
+
+也欢迎提 [Issue](https://github.com/Wenhao-liao/mcd-microscope/issues) 补充你在其他门店、其他城市跑出来的数据，让这份对照表更完整。
 
 ---
 
